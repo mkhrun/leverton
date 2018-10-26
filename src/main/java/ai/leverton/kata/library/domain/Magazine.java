@@ -26,14 +26,14 @@ public class Magazine {
         this.authors = Stream.of(record.get(MagazineHeaders.AUTHORS).split(","))
                              .map(LocalStorage.getAuthorHashMap()::get)
                              .collect(toSet());
-        ;
+
         this.publishedAt = LocalDate.parse(record.get(MagazineHeaders.PUBLISHED_AT), DateTimeFormatter.ofPattern("dd.MM.yyyy"));
         this.isbn = record.get(MagazineHeaders.ISBN);
     }
 
     @Getter
     @AllArgsConstructor
-    public static enum MagazineHeaders {
+    public enum MagazineHeaders {
         TITLE("title"),
         ISBN("isbn"),
         AUTHORS("auhtors"),

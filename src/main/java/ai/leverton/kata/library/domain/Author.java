@@ -19,7 +19,7 @@ public class Author {
 
     @Getter
     @AllArgsConstructor
-    public static enum AuthorHeaders {
+    public enum AuthorHeaders {
         EMAIL("email"),
         FIRST_NAME("firstname"),
         LAST_NAME("lastname");

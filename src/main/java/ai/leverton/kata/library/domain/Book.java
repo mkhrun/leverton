@@ -30,7 +30,7 @@ public class Book {
 
     @Getter
     @AllArgsConstructor
-    public static enum BookHeaders {
+    public enum BookHeaders {
         TITLE("title"),
         ISBN("isbn"),
         AUTHORS("auhtors"),

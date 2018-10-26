@@ -21,19 +21,19 @@ import static java.util.stream.Collectors.toMap;
 
 public final class CsvParser {
     private static final String RESOURCE_PACKAGE = "ai/leverton/kata/library/data/";
-    private static CSVFormat format = CSVFormat.DEFAULT.withDelimiter(';').withIgnoreEmptyLines(true).withQuote('"').withRecordSeparator("\r\n");
+    private static final CSVFormat CSV_FORMAT = CSVFormat.DEFAULT.withDelimiter(';').withIgnoreEmptyLines(true).withQuote('"').withRecordSeparator("\r\n");
 
     private CsvParser() {}
 
     private static <T, E extends Enum<E>> List<T> parseCsvFile(InputStream csvFile, Class<E> headerClass, Function<CSVRecord, T> tSupplier) {
         try (Reader fileIn = new InputStreamReader(csvFile)) {
-            return format.withHeader(headerClass)
-                         .withSkipHeaderRecord(true)
-                         .parse(fileIn)
-                         .getRecords()
-                         .stream()
-                         .map(tSupplier)
-                         .collect(Collectors.toList());
+            return CSV_FORMAT.withHeader(headerClass)
+                             .withSkipHeaderRecord(true)
+                             .parse(fileIn)
+                             .getRecords()
+                             .stream()
+                             .map(tSupplier)
+                             .collect(Collectors.toList());
         } catch (IOException e) {
             return Collections.emptyList();
         }
