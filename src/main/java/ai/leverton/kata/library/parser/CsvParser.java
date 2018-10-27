@@ -38,15 +38,15 @@ public final class CsvParser {
         }
     }
 
-    public static <T, E extends Enum<E>> void processCsvFile(String fileName, Class<E> enumClass, Function<CSVRecord, T> tSupplier,
+    public static <T, E extends Enum<E>> void processCsvFile(String filePath, Class<E> enumClass, Function<CSVRecord, T> tSupplier,
                                                               Consumer<Map<String, T>> mapConsumer, Function<T, String> keyMapper) {
 
-        try (InputStream file = MainApp.class.getClassLoader().getResourceAsStream(fileName)) {
+        try (InputStream file = MainApp.class.getClassLoader().getResourceAsStream(filePath)) {
             mapConsumer.accept(CsvParser.parseCsvFile(file, enumClass, tSupplier)
                                         .stream()
                                         .collect(toMap(keyMapper, identity())));
         } catch (IOException e) {
-            System.err.println("Cannot read file " + fileName);
+            System.err.println("Cannot read file " + filePath);
         }
     }
 }
