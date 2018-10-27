@@ -1,11 +1,12 @@
 package ai.leverton.kata.library.domain;
 
-import java.util.Set;
 import java.util.stream.Stream;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 import org.apache.commons.csv.CSVRecord;
 
 import ai.leverton.kata.library.storage.LocalStorage;
@@ -13,19 +14,19 @@ import ai.leverton.kata.library.storage.LocalStorage;
 import static java.util.stream.Collectors.toSet;
 
 @Data
-public class Book {
-    private String title;
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class Book extends Publication {
     private String description;
-    private Set<Author> authors;
     private String isbn;
 
     public Book(CSVRecord record) {
-        this.title = record.get(BookHeaders.TITLE);
         this.description = record.get(BookHeaders.DESCRIPTION);
-        this.authors = Stream.of(record.get(BookHeaders.AUTHORS).split(","))
-                             .map(LocalStorage.getAuthorHashMap()::get)
-                             .collect(toSet());
         this.isbn = record.get(BookHeaders.ISBN);
+        setTitle(record.get(BookHeaders.TITLE));
+        setAuthors(Stream.of(record.get(BookHeaders.AUTHORS).split(","))
+                             .map(LocalStorage.getAuthorHashMap()::get)
+                             .collect(toSet()));
     }
 
     @Getter
