@@ -31,10 +31,10 @@ public class MainApp {
 
         scanner.close();
 
-        performTasts(input[0], input[1]);
+        performTasks(input[0], input[1]);
     }
 
-    private static void performTasts(String isbn, String email) {
+    private static void performTasks(String isbn, String email) {
         System.out.println("{PUBLICATION BY ISBN: " + isbn + "}");
         findBookOrMagazineByIsbn(isbn);
 
