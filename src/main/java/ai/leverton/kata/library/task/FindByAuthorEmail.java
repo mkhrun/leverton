@@ -1,8 +1,8 @@
 package ai.leverton.kata.library.task;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Predicate;
-import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import ai.leverton.kata.library.domain.Author;
@@ -13,19 +13,15 @@ public final class FindByAuthorEmail {
     private FindByAuthorEmail() {
     }
 
-    private static <T extends Publication> Stream<T> findPublicationByAuthorEmail(Supplier<Map<String, T>> mapSupplier, Predicate<T> predicate) {
-        return mapSupplier.get()
-                          .entrySet()
-                          .stream()
-                          .filter(stringTEntry -> predicate.test(stringTEntry.getValue()))
-                          .map(Map.Entry::getValue);
-    }
-
-    public static void findBookOrMagazineByAuthorsEmail(String email) {
+    public static Stream<? extends Publication> findBookOrMagazineByAuthorsEmail(String email) {
         Predicate<Author> authorPredicate = (author) -> author.getEmail().equals(email);
 
-        findPublicationByAuthorEmail(LocalStorage::getPublicationHashMap,
-                                     book -> book.getAuthors().stream().anyMatch(authorPredicate))
-                    .forEach(System.out::println);
+        return LocalStorage.getPublicationHashMap()
+                           .entrySet()
+                           .stream()
+                           .filter(stringTEntry -> Optional.ofNullable(stringTEntry.getValue())
+                                                           .map(publication -> publication.getAuthors().stream().anyMatch(authorPredicate))
+                                                           .orElse(false))
+                           .map(Map.Entry::getValue);
     }
 }
