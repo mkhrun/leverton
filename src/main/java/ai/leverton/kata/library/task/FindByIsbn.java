@@ -9,7 +9,7 @@ public final class FindByIsbn {
     private FindByIsbn() {
     }
 
-    public static Optional<? extends Publication> findBookOrMagazineByIsbn(String isbn) {
+    public static Optional<? extends Publication> findPublicationByIsbn(String isbn) {
         return Optional.ofNullable(LocalStorage.getPublicationHashMap().get(isbn));
     }
 }

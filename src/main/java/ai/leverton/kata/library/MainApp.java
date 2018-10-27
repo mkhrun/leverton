@@ -9,9 +9,9 @@ import ai.leverton.kata.library.domain.Publication;
 import ai.leverton.kata.library.storage.LocalStorage;
 
 import static ai.leverton.kata.library.parser.CsvParser.processCsvFile;
-import static ai.leverton.kata.library.task.FindByAuthorEmail.findBookOrMagazineByAuthorsEmail;
-import static ai.leverton.kata.library.task.FindByIsbn.findBookOrMagazineByIsbn;
-import static ai.leverton.kata.library.task.SortAllPublicationByTitle.sortByTitle;
+import static ai.leverton.kata.library.task.FindByAuthorEmail.findPublicationByAuthorsEmail;
+import static ai.leverton.kata.library.task.FindByIsbn.findPublicationByIsbn;
+import static ai.leverton.kata.library.task.SortByTitle.sortPublicationByTitle;
 
 @SuppressWarnings("UseOfSystemOutOrSystemErr")
 public class MainApp {
@@ -37,15 +37,15 @@ public class MainApp {
 
     private static void performTasks(String isbn, String email) {
         System.out.println("{PUBLICATION BY ISBN: " + isbn + "}");
-        System.out.println(findBookOrMagazineByIsbn(isbn).map(Publication::toString).orElse("None was found"));
+        System.out.println(findPublicationByIsbn(isbn).map(Publication::toString).orElse("None was found"));
 
         System.out.println();
         System.out.println("{PUBLICATION(S) BY AUTHORS EMAIL: " + email + "}");
-        findBookOrMagazineByAuthorsEmail(email).forEach(System.out::println);
+        findPublicationByAuthorsEmail(email).forEach(System.out::println);
 
         System.out.println();
         System.out.println("{PUBLICATIONS SORTED BY TITLE}");
-        sortByTitle().forEach((title, publications) -> {
+        sortPublicationByTitle().forEach((title, publications) -> {
             System.out.println("{TITLE: " + title + "}");
             System.out.println("{PUBLICATION: ");
             publications.forEach(System.out::println);

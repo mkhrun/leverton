@@ -13,7 +13,7 @@ public final class FindByAuthorEmail {
     private FindByAuthorEmail() {
     }
 
-    public static Stream<? extends Publication> findBookOrMagazineByAuthorsEmail(String email) {
+    public static Stream<? extends Publication> findPublicationByAuthorsEmail(String email) {
         Predicate<Author> authorPredicate = (author) -> author.getEmail().equals(email);
 
         return LocalStorage.getPublicationHashMap()

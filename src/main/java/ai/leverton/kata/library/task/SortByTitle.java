@@ -12,11 +12,11 @@ import static java.util.Collections.singletonList;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
 
-public final class SortAllPublicationByTitle {
-    private SortAllPublicationByTitle() {
+public final class SortByTitle {
+    private SortByTitle() {
     }
 
-    public static Map<String, List<? extends Publication>> sortByTitle() {
+    public static Map<String, List<? extends Publication>> sortPublicationByTitle() {
         return LocalStorage.getPublicationHashMap()
                            .entrySet()
                            .stream()
