@@ -20,7 +20,6 @@ import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 
 public final class CsvParser {
-    private static final String RESOURCE_PACKAGE = "ai/leverton/kata/library/data/";
     private static final CSVFormat CSV_FORMAT = CSVFormat.DEFAULT.withDelimiter(';').withIgnoreEmptyLines(true).withQuote('"').withRecordSeparator("\r\n");
 
     private CsvParser() {}
@@ -42,7 +41,7 @@ public final class CsvParser {
     public static <T, E extends Enum<E>> void processCsvFile(String fileName, Class<E> enumClass, Function<CSVRecord, T> tSupplier,
                                                               Consumer<Map<String, T>> mapConsumer, Function<T, String> keyMapper) {
 
-        try (InputStream file = MainApp.class.getClassLoader().getResourceAsStream(RESOURCE_PACKAGE + fileName)) {
+        try (InputStream file = MainApp.class.getClassLoader().getResourceAsStream(fileName)) {
             mapConsumer.accept(CsvParser.parseCsvFile(file, enumClass, tSupplier)
                                         .stream()
                                         .collect(toMap(keyMapper, identity())));

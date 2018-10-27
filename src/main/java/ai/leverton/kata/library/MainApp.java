@@ -14,6 +14,7 @@ import static ai.leverton.kata.library.task.SortAllPublicationByTitle.sortByTitl
 
 @SuppressWarnings("UseOfSystemOutOrSystemErr")
 public class MainApp {
+    private static final String RESOURCE_PACKAGE = "ai/leverton/kata/library/data/";
 
     public static void main(String[] args) {
         processFiles();
@@ -47,8 +48,8 @@ public class MainApp {
     }
 
     private static void processFiles() {
-        processCsvFile("authors.csv", Author.AuthorHeaders.class, Author::new, LocalStorage::setAuthorHashMap, Author::getEmail);
-        processCsvFile("books.csv", Book.BookHeaders.class, Book::new, LocalStorage::setBookHashMap, Book::getIsbn);
-        processCsvFile("magazines.csv", Magazine.MagazineHeaders.class, Magazine::new, LocalStorage::setMagazineHashMap, Magazine::getIsbn);
+        processCsvFile(RESOURCE_PACKAGE + "authors.csv", Author.AuthorHeaders.class, Author::new, LocalStorage::setAuthorHashMap, Author::getEmail);
+        processCsvFile(RESOURCE_PACKAGE + "books.csv", Book.BookHeaders.class, Book::new, LocalStorage::setPublicationHashMap, Book::getIsbn);
+        processCsvFile(RESOURCE_PACKAGE + "magazines.csv", Magazine.MagazineHeaders.class, Magazine::new, LocalStorage::setPublicationHashMap, Magazine::getIsbn);
     }
 }
