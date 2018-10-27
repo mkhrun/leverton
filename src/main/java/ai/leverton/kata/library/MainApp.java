@@ -5,6 +5,7 @@ import java.util.Scanner;
 import ai.leverton.kata.library.domain.Author;
 import ai.leverton.kata.library.domain.Book;
 import ai.leverton.kata.library.domain.Magazine;
+import ai.leverton.kata.library.domain.Publication;
 import ai.leverton.kata.library.storage.LocalStorage;
 
 import static ai.leverton.kata.library.parser.CsvParser.processCsvFile;
@@ -36,15 +37,20 @@ public class MainApp {
 
     private static void performTasks(String isbn, String email) {
         System.out.println("{PUBLICATION BY ISBN: " + isbn + "}");
-        findBookOrMagazineByIsbn(isbn);
+        System.out.println(findBookOrMagazineByIsbn(isbn).map(Publication::toString).orElse("None was found"));
 
         System.out.println();
         System.out.println("{PUBLICATION(S) BY AUTHORS EMAIL: " + email + "}");
-        findBookOrMagazineByAuthorsEmail(email);
+        findBookOrMagazineByAuthorsEmail(email).forEach(System.out::println);
 
         System.out.println();
         System.out.println("{PUBLICATIONS SORTED BY TITLE}");
-        sortByTitle();
+        sortByTitle().forEach((title, publications) -> {
+            System.out.println("{TITLE: " + title + "}");
+            System.out.println("{PUBLICATION: ");
+            publications.forEach(System.out::println);
+            System.out.println("}");
+        });
     }
 
     private static void processFiles() {
