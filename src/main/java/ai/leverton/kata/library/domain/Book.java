@@ -1,8 +1,10 @@
 package ai.leverton.kata.library.domain;
 
+import java.util.Set;
 import java.util.stream.Stream;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -18,11 +20,16 @@ import static java.util.stream.Collectors.toSet;
 @ToString(callSuper = true)
 public class Book extends Publication {
     private String description;
-    private String isbn;
+
+    @Builder
+    public Book(final String isbn, final String title, final Set<Author> authors, String description) {
+        super(isbn, title, authors);
+        this.description = description;
+    }
 
     public Book(CSVRecord record) {
         this.description = record.get(BookHeaders.DESCRIPTION);
-        this.isbn = record.get(BookHeaders.ISBN);
+        setIsbn(record.get(BookHeaders.ISBN));
         setTitle(record.get(BookHeaders.TITLE));
         setAuthors(Stream.of(record.get(BookHeaders.AUTHORS).split(","))
                              .map(LocalStorage.getAuthorHashMap()::get)
